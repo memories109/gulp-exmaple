@@ -1,5 +1,6 @@
 var gulp = require('gulp'); 
-var scss = require('gulp-sass'); 
+// const sass = require('node-sass')
+var sass = require('gulp-sass')(require('sass'));
 var sourcemaps = require('gulp-sourcemaps'); 
 // 소스 파일 경로 
 var PATH = { 
@@ -15,11 +16,14 @@ DEST_PATH = {
         , IMAGES: './dist/assets/images' 
         , STYLE: './dist/assets/style' 
     } 
-}; gulp.task( 'scss:compile', () => { 
+}; 
+gulp.task( 'scss:compile', () => { 
     return new Promise( resolve => {
          var options = { 
              outputStyle: "nested" // nested, expanded, compact, compressed 
-             , indentType: "space" // space, tab , indentWidth: 4 // , precision: 8 
+             , indentType: "space" // space, tab 
+             , indentWidth: 4 // 
+             , precision: 8 
              , sourceComments: true // 코멘트 제거 여부 
             }; 
             gulp.src( 
@@ -27,8 +31,7 @@ DEST_PATH = {
                 .pipe( sourcemaps.init() ) 
                 .pipe( scss(options) ) 
                 .pipe( sourcemaps.write() ) 
-                .pipe( gulp.dest( DEST_PATH.ASSETS.STYLE ) 
-                ); 
+                .pipe( gulp.dest( DEST_PATH.ASSETS.STYLE ) ); 
         resolve(); 
     }); 
 }); 
